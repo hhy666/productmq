@@ -1,0 +1,50 @@
+server:
+  port: 8989   #修改默认端口
+  context-path: /productmq #用来指定项目名
+  jsp-servlet:
+    init-parameters:
+      development: true  #开启jsp页面热部署功能
+spring:
+  mvc:
+    view:
+      prefix: / #前缀
+      suffix: .jsp  #后缀
+    #修改上传文件大小
+  http:
+    multipart:
+      max-file-size: 20971520  #用来指定服务器端最大文件大小
+      max-request-size: 209715200 #用来控制文件上传大小限制
+      #配置数据源
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/product?characterEncoding=UTF-8
+    username: root
+    password: root
+  #配置rabbitmq服务器
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: 111111
+    #虚拟host 可以不设置,使用server默认host
+    virtual-host: bb
+    #消息确认配置项
+    #确认消息已发送到交换机(Exchange)
+    #publisher-confirms: true    #如果版本支持就用这个，不支持就用下面的
+    publisher-confirms-type: correlated
+    #确认消息已发送到队列(Queue)
+    publisher-returns: true
+    listener:
+      simple:
+        #配置并发的消费者个数
+        concurrency: 10
+        #配置并发的最大消费者个数
+        max-concurrency: 20
+        #在单个请求中处理的消息个数
+        prefetch: 5
+#配置mapper配置文件位置
+mybatis:
+  mapper-locations: classpath:com/springmq/mapper/*Mapper.xml
+  #给当前包下的类起别名
+  type-aliases-package: com.springmq.entity

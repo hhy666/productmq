@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springmq.dao.ProductMapper">
+   <select id="selectByProductNo" parameterType="String" resultType="Product">
+       select id,product_no,total,create_time,update_time from product where product_no = #{productNo}
+   </select>
+   <update id="updateTotal" parameterType="String" >
+       update product set id=#{id},product_no=#{productNo},total=#{total},create_time=#{createTime},update_time=#{updateTime} where product_no = #{productNo}
+   </update>
+    <select id="findAll" resultType="Product">
+       select id,product_no,total,create_time,update_time from product
+   </select>
+</mapper>
